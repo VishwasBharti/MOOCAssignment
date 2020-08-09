@@ -19,23 +19,14 @@ class Scene1(GraphScene, Scene):
     }
 	def construct(self):
 		dsp_intro = TextMobject("What is DSP?")
-		asp = TextMobject("ASP(Analog Signal Processing):")
-		asp.set_color(ORANGE)
 		dsp_intro.set_color(YELLOW)
 		dsp_intro.move_to(ORIGIN)
 		image1 = ImageMobject("Scene1.png")
 		image1.to_edge(DOWN)
-		radio = ImageMobject("radio.png")
-		radio.move_to(LEFT)
-		tv = ImageMobject("tv.png")
-		tv.next_to(radio, RIGHT)
-		asp.move_to(5*LEFT)
-		self.add_sound("background_music.mp3", gain = -2)
 		self.add_sound("Scene1_p1.wav", gain = 10) 
 		self.wait(1)
 		self.play(ShowCreation(dsp_intro))
 		self.wait(19)
-		self.play(dsp_intro.shift, 3*UP, FadeIn(tv), FadeIn(radio), FadeIn(asp.scale(0.4)))
 		self.wait(32)
 		self.clear()
 		self.play(FadeIn(image1.scale(1.8)))
@@ -93,7 +84,7 @@ class Scene1(GraphScene, Scene):
 		self.play(ShowCreation(analog_output_signal_y_val), run_time = 6)
 		self.wait(2)
 		self.remove(lines_output_group, dots_output_group)
-		self.wait(10)
+		self.wait(7)
 
 	##############################################################################################################################################################
 	def to_dots(self, x_points, y_points, myaxes, mycolor=YELLOW):

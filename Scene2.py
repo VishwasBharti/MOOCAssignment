@@ -16,7 +16,6 @@ class Scene2(GraphScene, Scene):
 		linearity_eq = TexMobject(r"\alpha { x }_{ 1 }[n]+\beta { x }_{ 2 }[n]\xrightarrow {  } { \alpha y }_{ 1 }[n]+{ \beta y }_{ 2 }[n]")
 		linearity_eq.next_to(x2_eq, DOWN)
 		linearity_eq.set_color(TEAL_A)
-		self.add_sound("background_music.mp3", gain = -2)
 		self.add_sound("Scene2_prop1.wav", gain = 10)
 		self.play(ShowCreation(heading))
 		self.wait()
@@ -49,4 +48,4 @@ class Scene2(GraphScene, Scene):
 		self.play(ShowCreation(shift_invariance_eq))
 		self.wait()
 		self.play(ShowCreation(shift_invariance_eq_text))
-		self.wait(30)
+		self.wait(22)

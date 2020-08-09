@@ -41,7 +41,6 @@ class Scene3(GraphScene, Scene):
 		discrete_input_signal_y_val = [(np.sinc(x)) for x in range(-10,11)]
 		discrete_output_signal_x_val = np.array(range(-10,11))
 		discrete_output_signal_y_val = [(((0.9)**x)*np.heaviside(x, 1)) for x in range(-10,11)]
-		self.add_sound("background_music.mp3", gain = -2)
 		self.add_sound("Scene3_p1.wav", gain = 10)
 		self.add(axis1, xlabels_axis1, ylabels_axis1)
 		self.wait(2)

@@ -27,7 +27,6 @@ class Scene4(GraphScene, Scene):
 		inverse_DTFT = TexMobject(r"x[n]\quad =\quad \frac { 1 }{ 2\pi  } \int _{ -\pi  }^{ \pi  }{ X(\omega ) } { e }^{ j\omega n }d\omega")
 		inverse_DTFT.set_color(MAROON_A)
 		inverse_DTFT.next_to(inverse_DTFT_text, DOWN)
-		self.add_sound("background_music.mp3", gain = -2)
 		self.add_sound("Scene4_p1.wav", gain = 10)
 		self.play(ShowCreation(DTFT_heading.scale(0.8)))
 		self.wait()
@@ -126,7 +125,6 @@ class Scene4(GraphScene, Scene):
 		v_final = Vector(4*RIGHT)
 		v_final.set_color(ORANGE)
 		self.wait(8)
-		self.add_sound("background_music.mp3", gain = -2)
 		self.play(ShowCreation(v1), ShowCreation(v2), ShowCreation(v1_label), ShowCreation(v2_label))
 		self.wait(8)
 		self.play(ShowCreation(v1_sin), ShowCreation(v1_cos), FadeOut(v1), Uncreate(v1_label))
@@ -151,7 +149,7 @@ class Scene4(GraphScene, Scene):
 		self.play(ShowCreation(prop_5_text.scale(0.6)))
 		self.wait(9)
 		self.play(ShowCreation(prop_5.scale(0.6)))
-		self.wait(60)
+		self.wait(17)
 
 		
 
