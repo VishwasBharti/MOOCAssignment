@@ -1,2 +1,2 @@
 # MOOCAssignment
-This is a Lecture which introduces Digital Signal Processing. It introduces Discrete Time Fourier Transform and its properties. It has some visualisations of convolution propoperty as well.
+This is a Lecture gives a brief introduction of Digital Signal Processing. It further introduces Discrete Time Fourier Transform and its properties with some visualisations done in manim software.
