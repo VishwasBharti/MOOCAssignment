@@ -32,7 +32,7 @@ class Scene3(GraphScene, Scene):
 		ylabels_axis1 = axis1.get_y_axis().get_number_mobjects(*[0,1])
 
 		impulse_eq = TexMobject(r"{ \delta }[n]\xrightarrow {  } { h }[n]")
-		impulse_eq.next_to(impulse_func, DOWN)
+		impulse_eq.move_to(UP)
 		impulse_eq.set_color(BLUE)
 		general_impulse_eq = TexMobject(r"{ \delta }[n-k]\xrightarrow {  } { h }[n-k]")
 		general_impulse_eq.next_to(impulse_eq, DOWN)
@@ -41,9 +41,6 @@ class Scene3(GraphScene, Scene):
 		discrete_input_signal_y_val = [(np.sinc(x)) for x in range(-10,11)]
 		discrete_output_signal_x_val = np.array(range(-10,11))
 		discrete_output_signal_y_val = [(((0.9)**x)*np.heaviside(x, 1)) for x in range(-10,11)]
-		self.add_sound("Scene3_p1.wav", gain = 10)
-		self.add(axis1, xlabels_axis1, ylabels_axis1)
-		self.wait(2)
 		impulse = TextMobject("$\\delta$[n]")
 		impulse.set_color(YELLOW)
 		impulse.move_to(1*LEFT)
@@ -55,48 +52,23 @@ class Scene3(GraphScene, Scene):
 		impulse_response.set_color(TEAL)
 		impulse_response.move_to(1*LEFT)
 		impulse_response_dots_lines_group = VGroup(*impulse_response_dots, *impulse_response_lines, impulse_response)
-
-		self.play(ReplacementTransform(impulse_dots_lines_group, impulse_response_dots_lines_group), ShowCreation(impulse_eq), run_time = 4)
-		self.wait(8)
-		#14
-		self.remove(impulse_response_dots_lines_group)
-		self.play(ShowCreation(impulse_func), ShowCreation(VGroup(*impulse_lines_copy)), ShowCreation(VGroup(*impulse_dots_copy)))
-		self.wait()
 		impulse_decomposition_text = TextMobject("Any general discrete signal can be decomposed into a linear combination of shifted impulses. In better words, any discrete signal is equal to its convolution with the impulse function.")
 		impulse_decomposition_text.set_color(BLUE)
 		impulse_decomposition_text.next_to(impulse_func, DOWN)
-		#17
-		self.remove(impulse_eq)
-		self.play(ShowCreation(impulse_decomposition_text.scale(0.8)))
-		self.remove(*impulse_dots_copy, *impulse_lines_copy)
 		
 		discrete_input_signal_x_val = np.array(range(-10,11))
 		discrete_input_signal_y_val = [(np.sinc(x)+np.sin(x)+(np.cos(x))**2)/2 for x in range(-10,11)]
 		dots_input, lines_input = self.get_discrete(discrete_input_signal_x_val, discrete_input_signal_y_val, myaxes = axis1, mycolor = BLUE)
 		dots_input_group = VGroup(*dots_input)
 		lines_input_group = VGroup(*lines_input)
-		self.play(ShowCreation(lines_input_group), ShowCreation(dots_input_group), lag_ratio = 2, run_time = 2)
 		dots_input2, lines_input2 = self.get_discrete(discrete_input_signal_x_val, discrete_input_signal_y_val, myaxes = axis1, mycolor = YELLOW)
 		dots_input_group2 = VGroup(*dots_input2)
 		lines_input_group2 = VGroup(*lines_input2)
-		self.play(ShowCreation(lines_input_group2), ShowCreation(dots_input_group2), lag_ratio = 2, run_time = 13)
-		#35
 		impulse_decomposition = TexMobject(r"x[n]\quad =\quad \sum _{ k=-\infty  }^{ \infty  }{ x[k]\delta [n-k] } = x*\delta[n]")
 		impulse_decomposition.set_color(MAROON_A)
 		impulse_decomposition.next_to(impulse_func, DOWN)
-		self.play(ReplacementTransform(impulse_decomposition_text, impulse_decomposition.scale(0.8)))
-		self.wait(18)
-		#53
-		self.add_sound("Scene3_p2.wav", gain = 10)
-		self.play(ReplacementTransform(impulse_func, general_impulse_func))
-		self.remove(axis1, xlabels_axis1, ylabels_axis1, dots_input_group, dots_input_group2, lines_input_group, lines_input_group2)
-		self.wait()
 		impulse_eq.next_to(impulse_decomposition, DOWN)
 		general_impulse_eq.next_to(impulse_eq, DOWN)
-		self.play(ShowCreation(impulse_eq))
-		self.wait(2)
-		self.play(ShowCreation(general_impulse_eq))
-		self.wait(7)
 		#10_p2
 		x_k_delta_n_k = TexMobject(r"{ x[k]\delta }[n-k]\xrightarrow {  } x[k]{ h }[n-k]")
 		x_k_delta_n_k.set_color(TEAL_A)
@@ -104,12 +76,6 @@ class Scene3(GraphScene, Scene):
 		final_expression = TexMobject(r"\sum _{ k=-\infty  }^{ \infty  }{ x[k]\delta [n-k] }\xrightarrow {  }\sum _{ k=-\infty  }^{ \infty  }{ x[k]h[n-k] }")
 		final_expression.set_color(TEAL_A)
 		final_expression.next_to(x_k_delta_n_k, DOWN)
-		self.play(ShowCreation(x_k_delta_n_k))
-		self.wait(12)
-		#22
-		self.play(ShowCreation(final_expression))
-		self.wait(28)
-		self.clear()
 
 		text1 = TextMobject("Usually this infinite sum converges. We can find out the output signal y[n] for any input signal x[n] if we know the impulse response h[n] which characterises the LSI System.")
 		text1.set_color(BLUE)
@@ -121,15 +87,44 @@ class Scene3(GraphScene, Scene):
 		text2 = TextMobject(" note that convolution is an operation between two sequences and not two numbers.")
 		text2.set_color(BLUE)
 		text2.next_to(output_expression, DOWN)
+
+		#animation start
+		self.add_sound("Scene3_p1.wav", gain = 10)
+		self.add(axis1, xlabels_axis1, ylabels_axis1)
+		self.wait(2)
+		self.play(ReplacementTransform(impulse_dots_lines_group, impulse_response_dots_lines_group), run_time = 4)
+		self.wait(8)
+		#14
+		self.remove(impulse_response_dots_lines_group)
+		self.play(ShowCreation(impulse_func), ShowCreation(VGroup(*impulse_lines_copy)), ShowCreation(VGroup(*impulse_dots_copy)))
+		self.wait()
+		self.remove(impulse_eq)
+		#self.play(ShowCreation(impulse_decomposition_text.scale(0.8)))
+		self.remove(*impulse_dots_copy, *impulse_lines_copy)
+		self.play(ShowCreation(lines_input_group), ShowCreation(dots_input_group), lag_ratio = 2, run_time = 2)
+		self.play(ShowCreation(lines_input_group2), ShowCreation(dots_input_group2), lag_ratio = 2, run_time = 13)
+		self.play(FadeIn(impulse_decomposition.scale(0.8)))
+		self.wait(20)
+		#53
+		self.add_sound("Scene3_p2.wav", gain = 10)
+		self.play(ReplacementTransform(impulse_func, general_impulse_func))
+		self.remove(axis1, xlabels_axis1, ylabels_axis1, dots_input_group, dots_input_group2, lines_input_group, lines_input_group2)
+		self.wait(2)
+		self.play(ShowCreation(impulse_eq))
+		self.wait(4)
+		self.play(ShowCreation(general_impulse_eq))
+		self.wait(7)
+		self.play(ShowCreation(x_k_delta_n_k))
+		self.wait(12)
+		#22
+		self.play(ShowCreation(final_expression))
+		self.wait(20)
+		self.clear()
 		self.add_sound("Scene3_p3.wav", gain = 10)
-		self.play(ShowCreation(text1.scale(0.8)))
+		#self.play(ShowCreation(text1.scale(0.8)))
 		self.play(ShowCreation(output_expression))
-		self.play(ShowCreation(text2.scale(0.8)))
+		#self.play(ShowCreation(text2.scale(0.8)))
 		self.wait(10)
-
-
-
-
 #########################################################################################################################################################
 	def to_dots(self, x_points, y_points, myaxes, mycolor=YELLOW):
 		'''

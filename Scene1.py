@@ -18,20 +18,26 @@ class Scene1(GraphScene, Scene):
         "x_axis_width":10
     }
 	def construct(self):
-		dsp_intro = TextMobject("What is DSP?")
+		dsp_intro = TextMobject("RECAP: What is DSP?")
 		dsp_intro.set_color(YELLOW)
 		dsp_intro.move_to(ORIGIN)
-		image1 = ImageMobject("Scene1.png")
-		image1.to_edge(DOWN)
+		image1 = ImageMobject("ADC.png")
+		image2 = ImageMobject("DS.png")
+		image3 = ImageMobject("DAC.png")
+		image1 = image1.scale(1.4)
+		image2 = image2.scale(1.4)
+		image3 = image3.scale(1.3)
+		image2.to_edge(DOWN)
+		image1.next_to(image2,LEFT)
+		image3.next_to(image2,RIGHT)
 		self.add_sound("Scene1_p1.wav", gain = 10) 
 		self.wait(1)
 		self.play(ShowCreation(dsp_intro))
 		self.wait(19)
 		self.wait(32)
 		self.clear()
-		self.play(FadeIn(image1.scale(1.8)))
-		self.wait()
 		self.add_sound("Scene1_p2.wav", gain = 10)
+		self.play(FadeIn(image1))
 		axis1 = Axes(
 		    x_min = -10,
 		    x_max = 11,
@@ -66,25 +72,23 @@ class Scene1(GraphScene, Scene):
 		discrete_output_signal_y_val = [(np.sinc(x)+np.cos(x)+(np.sin(x))**2)/2 for x in range(-10,11)]
 		self.play(ShowCreation(axis1), ShowCreation(xlabels_axis1), ShowCreation(ylabels_axis1))
 		self.play(ShowCreation(analog_input_signal_y_val))
-		self.wait()
 		dots_input, lines_input = self.get_discrete(discrete_input_signal_x_val, discrete_input_signal_y_val, myaxes = axis1, mycolor = BLUE)
 		dots_input_group = VGroup(*dots_input)
 		lines_input_group = VGroup(*lines_input)
-		self.wait()
 		self.play(ShowCreation(dots_input_group), ShowCreation(lines_input_group), run_time = 8)
-		self.wait(2)
+		self.wait(4)
 		self.remove(analog_input_signal_y_val)
 		dots_output, lines_output = self.get_discrete(discrete_input_signal_x_val, discrete_output_signal_y_val, myaxes = axis1, mycolor = PINK)
 		lines_output_group = VGroup(*lines_output)
 		dots_output_group = VGroup(*dots_output)
 		self.remove(lines_input_group)
-		self.play(ReplacementTransform(dots_input_group, dots_output_group), run_time = 5)
+		self.play(ReplacementTransform(dots_input_group, dots_output_group), FadeIn(image2.scale(1.14)),run_time = 5)
 		self.play(ShowCreation(lines_output_group))
-		self.wait(24)
-		self.play(ShowCreation(analog_output_signal_y_val), run_time = 6)
+		self.wait(20)
+		self.play(ShowCreation(analog_output_signal_y_val),FadeIn(image3), run_time = 6)
 		self.wait(2)
 		self.remove(lines_output_group, dots_output_group)
-		self.wait(7)
+		self.wait()
 
 	##############################################################################################################################################################
 	def to_dots(self, x_points, y_points, myaxes, mycolor=YELLOW):
